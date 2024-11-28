@@ -1,32 +1,23 @@
-# Weekly APN Report Automation
+# FTP Report Downloader
 
-This Python script automates the generation and distribution of weekly APN activation reports by querying an SQL database, processing the data, and sending the results via email.
+This Python script automates the retrieval of the latest reports from an FTP server and organizes them into local folders based on their categories (e.g., APN, GSM, MVPN). It also cleans up old reports from the local directories before downloading the latest files.
 
 ## Features
-- Connects to an SQL Server database using `pyodbc`.
-- Queries and processes data for two weekly reports.
-- Exports results to Excel files with dynamically generated filenames.
-- Sends an email with the generated reports as attachments.
+- Connects to an FTP server using `ftplib`.
+- Identifies the most recently modified files in specified FTP directories.
+- Downloads the newest files for each category (APN, GSM, MVPN).
+- Clears outdated reports from local directories before downloading new files.
 
 ## Prerequisites
 To run this script, you need:
 - Python 3.x installed on your system.
-- Required Python libraries:
-  - `pyodbc`
-  - `pandas`
-  - `win32com`
-  - `smtplib`
-  - `email`
-  - `matplotlib` (if required for further extensions)
-- Access to an SQL Server database.
-- A configured SMTP server for sending emails.
+- FTP server credentials (username and password).
+- Local directories structured to match the script's organization:
+  - `E://AdHoc Report/APN/`
+  - `E://AdHoc Report/GSM/`
+  - `E://AdHoc Report/MVPN/`
 
 ## How to Use
-1. Update the database connection string to match your SQL Server credentials and database:
+1. Update the FTP credentials and server details:
    ```python
-   conn = pyodbc.connect('Driver={SQL Server};'
-                         'Server=your_server;'
-                         'Database=your_database;'
-                         'Trusted_Connection=yes;')
-
-Update the email configuration in the send_email function
+   ftp = ftplib.FTP('your_ftp_server', user='your_username', passwd='your_password')
